@@ -18,20 +18,57 @@ int stan_custom_idealplm_register_actions(int * decision, va_list args)
 	{
 		*decision = ALL_CUSTOMIZATIONS;
 
-		METHOD_id_t post_set_izgotovitel_method;
+		METHOD_id_t post_set_izgotovitel_method_det;
+		METHOD_id_t post_set_izgotovitel_method_assy;
+		METHOD_id_t post_set_izgotovitel_method_cad;
+		METHOD_id_t post_set_izgotovitel_method_complect;
+		METHOD_id_t post_set_izgotovitel_method_complex;
+		METHOD_id_t post_set_izgotovitel_method_doc;
 
-		erc = METHOD_find_method("Pm8_CompanyPartRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		/*erc = METHOD_find_method("SPB5_DetRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		erc = METHOD_find_method("SPB5_AssyRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		erc = METHOD_find_method("SPB5_CADModelRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		erc = METHOD_find_method("SPB5_ComplectRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		erc = METHOD_find_method("SPB5_ComplexRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
-		erc = METHOD_find_method("SPB5_DocRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);*/
-		if (post_set_izgotovitel_method.id != NULLTAG) {
-			erc = METHOD_add_action(post_set_izgotovitel_method, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		//erc = METHOD_find_method("Pm8_CompanyPartRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
+		erc = METHOD_find_method("SPB5_DetRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_det);
+		erc = METHOD_find_method("SPB5_AssyRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_assy);
+		erc = METHOD_find_method("SPB5_CADModelRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_cad);
+		erc = METHOD_find_method("SPB5_ComplectRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_complect);
+		erc = METHOD_find_method("SPB5_ComplexRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_complex);
+		erc = METHOD_find_method("SPB5_DocRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_doc);
+
+		if (post_set_izgotovitel_method_det.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_det, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
 		} else {
-			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (M9_Cod1CRel)\n", erc);
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_DetRevision)\n", erc);
 		}
+
+		if (post_set_izgotovitel_method_assy.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_assy, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_AssyRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_cad.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_cad, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_CADModelRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_complect.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_complect, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_ComplectRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_complex.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_complex, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_ComplexRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_doc.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_doc, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_DocRevision)\n", erc);
+		}
+
 	}
 	catch (int exfail)
 	{

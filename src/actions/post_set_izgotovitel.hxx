@@ -12,7 +12,6 @@
          extern "C"{
 #endif
 
-int is_subgroup_of_group(tag_t inner_group, tag_t outer_group, bool* isSubgroupOfGroup);
 int post_set_izgotovitel(METHOD_message_t* msg, va_list args);
 
 #ifdef __cplusplus

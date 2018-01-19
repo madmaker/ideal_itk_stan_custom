@@ -50,6 +50,7 @@ EPM_decision_t check_user_group(EPM_rule_message_t msg)
 		target_group = NULLTAG,
 		root_task_group = NULLTAG,
 		root_group = NULLTAG,
+		dba_group,
 		current_task = NULLTAG,
 		root_task = NULLTAG,
 		*attachments,
@@ -74,6 +75,7 @@ EPM_decision_t check_user_group(EPM_rule_message_t msg)
 
 		WRITE_LOG(" %s\n", "looking for root group");
 		erc = SA_find_group("ŒŒŒ —“¿Õ", &root_group);
+		erc = SA_find_group("DBA", &dba_group);
 		if(root_group == NULLTAG) throw EPM_invalid_group_name;
 		WRITE_LOG(" %s\n", "asking root task");
 		erc = EPM_ask_root_task(current_task, &root_task);
