@@ -24,6 +24,9 @@ int stan_custom_idealplm_register_actions(int * decision, va_list args)
 		METHOD_id_t post_set_izgotovitel_method_complect;
 		METHOD_id_t post_set_izgotovitel_method_complex;
 		METHOD_id_t post_set_izgotovitel_method_doc;
+		METHOD_id_t post_set_izgotovitel_method_operation;
+		METHOD_id_t post_set_izgotovitel_method_process;
+		METHOD_id_t post_set_izgotovitel_method_route;
 
 		//erc = METHOD_find_method("Pm8_CompanyPartRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method);
 		erc = METHOD_find_method("SPB5_DetRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_det);
@@ -32,6 +35,9 @@ int stan_custom_idealplm_register_actions(int * decision, va_list args)
 		erc = METHOD_find_method("SPB5_ComplectRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_complect);
 		erc = METHOD_find_method("SPB5_ComplexRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_complex);
 		erc = METHOD_find_method("SPB5_DocRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_doc);
+		erc = METHOD_find_method("TPP5_OperationRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_operation);
+		erc = METHOD_find_method("TPP5_MEProcessRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_process);
+		erc = METHOD_find_method("TPP5_MERouteRevision", "createPost#Teamcenter::CreateInput,*", &post_set_izgotovitel_method_route);
 
 		if (post_set_izgotovitel_method_det.id != NULLTAG) {
 			erc = METHOD_add_action(post_set_izgotovitel_method_det, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
@@ -69,6 +75,23 @@ int stan_custom_idealplm_register_actions(int * decision, va_list args)
 			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (SPB5_DocRevision)\n", erc);
 		}
 
+		if (post_set_izgotovitel_method_operation.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_operation, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (TPP5_OperationRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_process.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_process, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (TPP5_MEProcessRevision)\n", erc);
+		}
+
+		if (post_set_izgotovitel_method_route.id != NULLTAG) {
+			erc = METHOD_add_action(post_set_izgotovitel_method_route, METHOD_post_action_type, (METHOD_function_t) post_set_izgotovitel, NULL);
+		} else {
+			fprintf(stdout, "Method NOT found! (createPost#Teamcenter::CreateInput,*) for (TPP5_MERouteRevision)\n", erc);
+		}
 	}
 	catch (int exfail)
 	{
