@@ -19,7 +19,7 @@ extern "C" __declspec (dllexport) int stan_custom_idealplm_register_callbacks()
 		printf("\Loading idealplm custom library...\n");
 
 		erc = CUSTOM_register_exit("stan_custom_idealplm", "USER_gs_shell_init_module", stan_custom_idealplm_register_action_handlers);
-		//erc = CUSTOM_register_exit("stan_custom_idealplm", "USER_register_properties", stan_custom_idealplm_register_properties);
+		erc = CUSTOM_register_exit("stan_custom_idealplm", "USER_register_properties", stan_custom_idealplm_register_properties);
 		erc = CUSTOM_register_exit("stan_custom_idealplm", "USER_init_module", stan_custom_idealplm_register_actions);
 	}
 	catch (...)

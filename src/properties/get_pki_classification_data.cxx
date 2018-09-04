@@ -11,7 +11,7 @@
 #include "../misc.hxx"
 #include "get_pki_classification_data.hxx"
 
-#define DESIRED_PKI_CLASS_NAME "PKI"
+#define DESIRED_PKI_CLASS_NAME "Покупные изделия"
 
 char* pki_result;
 int pki_count;
@@ -20,11 +20,12 @@ int read_pki_classification_object_data(tag_t object)
 {
 	tag_t
 		object_class,
-		parent_class;
+		parent_class,
+		parent_parent_class;
 	bool
 		cont = true;
 	char
-		*name;
+		*name = NULL;
 	int erc = ITK_ok;
 
 	erc = ICS_ask_class_of_classification_obj(object, &object_class);
@@ -33,20 +34,24 @@ int read_pki_classification_object_data(tag_t object)
 		erc = ICS_ask_parent(object_class, &parent_class);
 		if(parent_class != NULLTAG)
 		{
-			erc = AOM_ask_value_string(parent_class, "name", &name);
-			WRITE_LOG("Found parent with name %s\n", name);
-			if(strcmp(name, DESIRED_PKI_CLASS_NAME)==0)
+			erc = ICS_ask_parent(parent_class, &parent_parent_class);
+			if(parent_parent_class != NULLTAG)
 			{
+				erc = AOM_ask_value_string(parent_parent_class, "name", &name);
+				WRITE_LOG("Found parent with name %s\n", name);
+				if(strcmp(name, DESIRED_PKI_CLASS_NAME)==0)
+				{
+					MEM_free(name);
+					erc = AOM_ask_value_string(object_class, "name", &name);
+					pki_result = (char*) MEM_alloc(strlen(name) + 1);
+					strcpy(pki_result, name);
+					pki_count++;
+					WRITE_LOG("Found required parent %s\n for %i time", name, pki_count);
+					break;
+				}
+				object_class = parent_class;
 				MEM_free(name);
-				erc = AOM_ask_value_string(object_class, "name", &name);
-				pki_result = (char*) MEM_alloc(strlen(name) + 1);
-				strcpy(pki_result, name);
-				pki_count++;
-				WRITE_LOG("Found required parent %s\n for %i time", name, pki_count);
-				break;
 			}
-			object_class = parent_class;
-			MEM_free(name);
 		}
 		else
 		{

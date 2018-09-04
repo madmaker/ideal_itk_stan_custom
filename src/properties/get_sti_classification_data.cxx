@@ -11,7 +11,7 @@
 #include "../misc.hxx"
 #include "get_sti_classification_data.hxx"
 
-#define DESIRED_STI_CLASS_NAME "STI"
+#define DESIRED_STI_CLASS_NAME "Стандартные изделия"
 
 char* sti_result;
 int sti_count;
